@@ -1,0 +1,16 @@
+cff-version: 1.2.0
+message: "If you use this code, please cite the article."
+title: "Energy and failure select different descriptors: code"
+authors:
+  - family-names: "Gómez-Ovalle"
+    given-names: "A.E."
+    affiliation: "University of Burgos, Escuela Politécnica Superior, 09006 Burgos, Spain"
+    email: "aegovalle@ubu.es"
+  - family-names: "Ramírez Ovalle"
+    given-names: "C."
+    affiliation: "Department of Natural Sciences & Mathematics, Pontificia Universidad Javeriana – Cali, Cali, Colombia"
+repository-code: "https://github.com/aegovalle/energy-failure-descriptors"
+license: MIT
+version: "1.0.0"
+date-released: "2026-11-02"
+keywords: [descriptor sufficiency, homogenization, phase-field fracture, weakest-link hazard, counterexamples, FFT methods]

@@ -1,0 +1,22 @@
+# Outputs are generated locally by run_all.py and are not tracked
+campaign/*.csv
+campaign/*.json
+campaign/*.txt
+campaign/*.npz
+campaign/*.npy
+campaign/pf_out/
+campaign/pf_var/
+campaign/pf_res/
+campaign/blind/*.csv
+campaign/blind/*.json
+campaign/blind/*.npz
+campaign/blind/pf_out/
+campaign/tcd_frozen/*.csv
+campaign/tcd_frozen/*.json
+campaign/tcd_frozen/*.npz
+campaign/tcd_frozen/pf_out/
+figures/*.pdf
+figures/*.png
+__pycache__/
+*.log
+.DS_Store
