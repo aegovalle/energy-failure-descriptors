@@ -13,6 +13,7 @@ campaign/blind/*.npz
 campaign/blind/pf_out/
 campaign/tcd_frozen/*.csv
 campaign/tcd_frozen/*.json
+!campaign/tcd_frozen/tcd_results.json
 campaign/tcd_frozen/*.npz
 campaign/tcd_frozen/pf_out/
 figures/*.pdf

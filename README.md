@@ -50,6 +50,8 @@ The public commit history fixes the protocol from the date of publication of thi
 
 `campaign/tcd_frozen/tcd_protocol.md` and `campaign/tcd_frozen/tcd_frozen.py` were hashed and committed to this
 repository before any cell of that test was generated; the commit date is the verifiable time stamp.
+The outcome of the decision rules, as produced by `tcd_frozen.py analyze`, is in `campaign/tcd_frozen/tcd_results.json`
+(H1 confirmed, H2 confirmed, H3 refuted).
 
 ```
 30046521CA8368F47B2DE402BFDF321887A812FCB92AB99320BA6B3C14C5C4AA  tcd_protocol.md
