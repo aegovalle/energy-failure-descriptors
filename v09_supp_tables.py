@@ -136,12 +136,12 @@ for _, r in TS.iterrows():
         continue
     name = lab.get(d, r"$J_{" + d[2:] + r"\ell}$" if d.startswith("J_") else r"$R_H$")
     out.append(f"{name} & {r['corr']:.2f} & {r.ratio_E1plus:.2f} & {r.R2_E1plus:.2f} & {r.R2_alone:.2f}\\\\")
-out.append(r"\midrule \multicolumn{5}{l}{Blind out-of-sample $R^2$ (trained on the 180 design inclusion cells):}\\")
+out.append(r"\midrule \multicolumn{5}{l}{Held-out $R^2_{\rm oos}$ (trained on the 180 design inclusion cells; radius chosen without these cells):}\\")
 for st, nmst in (("A", "Set B (45)"), ("O", "Set O (12)")):
     b = TB["blind"][st]
     out.append(f"\\multicolumn{{5}}{{l}}{{{nmst}: $E1$ {b['E1']:.2f}; $E1+R_H$ {b['E1+R_H']:.2f}; $E1+J_\\psi$ {b['E1+J_psi']:.2f}; $E1+J_{{1.5\\ell}}$ {b['E1+J_1.5']:.2f}}}\\\\")
 out.append(r"\bottomrule\end{tabular}")
-out.append(r"\caption{Critical-distance onset intensity $J_r$ on the 150 multi-inclusion cells (radius in units of $\ell$) and blind check. "
+out.append(r"\caption{Critical-distance onset intensity $J_r$ on the 150 multi-inclusion cells (radius in units of $\ell$) and held-out check. "
            r"Conditional test of $E1\to E1+J_{1.5\ell}$ (local swap): $p_{\rm c}=" + f"{TB['cond']['p_swap_std_max']:.4f}" + r"$.}\label{tab:S-tcd}\end{table}")
 out.append(r"\begin{table}[ht]\centering\small")
 out.append(r"\begin{tabular}{lcccccccc}\toprule Variant & \multicolumn{8}{c}{$R^2_{\rm LOCO}$ of $f+J_r$ for absolute radius $r/L$}\\")
@@ -152,6 +152,29 @@ for case, g in TE.groupby("case"):
     g = g.set_index("r")
     out.append(vl[case] + " & " + " & ".join(f"{g.R2_loco_f_J[r]:.2f}" for r in rs) + r"\\")
 out.append(r"\bottomrule\end{tabular}")
-out.append(r"\caption{Scaling of the optimal averaging radius with the regularization length (49 inclusion cells of the 61-cell subset).}\label{tab:S-tcdell}\end{table}")
+out.append(r"\caption{Shift of the optimal averaging radius with the regularization length (49 inclusion cells of the 61-cell subset).}\label{tab:S-tcdell}\end{table}")
+# --- round 4: sweep-adjusted test, resolution of J_r, frozen prospective test
+SW = json.load(open("v09_r4_sweep.json")); RS = json.load(open("v09_r4_res255.json"))
+TF = json.load(open("tcd_frozen/tcd_results.json")); TX = json.load(open("tcd_frozen/tcd_exploratory.json"))
+out.append(r"\begin{table}[ht]\centering\small")
+out.append(r"\resizebox{\textwidth}{!}{\begin{tabular}{lcccc}\toprule")
+out.append(r"\multicolumn{5}{l}{(a) Conditional test $E1\to E1+J_r$ (local swap, 2000 draws), radius selection repeated in each draw}\\\midrule")
+out.append(r" & fixed $r=1.5\ell$ & selected by $R^2_{\rm LOCO}$ & minimum over $r$ & \\")
+out.append(f"$p_{{\\rm c}}$ (max / mean) & {SW['p_fixed_1.5_[max,mean]'][0]:.4f} / {SW['p_fixed_1.5_[max,mean]'][1]:.4f} & {SW['p_selected_by_R2LOCO_[max,mean]'][0]:.4f} / {SW['p_selected_by_R2LOCO_[max,mean]'][1]:.4f} & {SW['p_min_over_r_[max,mean]'][0]:.4f} / {SW['p_min_over_r_[max,mean]'][1]:.4f} & \\\\")
+out.append(r"\midrule \multicolumn{5}{l}{(b) Change between $N=127$ and $N=255$ (20 cells; 14 inclusion cells)}\\\midrule")
+out.append(r" & max $|\Delta|$ (all) & max $|\Delta|$ (incl.) & mean $|\Delta|$ (incl.) & Spearman (incl.)\\")
+for k, nm in (("J_0", r"$J_0=J_\psi$"), ("J_1", r"$J_{1\ell}$"), ("J_1.5", r"$J_{1.5\ell}$"), ("J_2", r"$J_{2\ell}$")):
+    v = RS[k]
+    out.append(f"{nm} & {v['max_abs_d_all']:.3f} & {v['max_abs_d_incl']:.3f} & {v['mean_abs_d_incl']:.3f} & {v['spearman_incl']:.3f}\\\\")
+out.append(r"\midrule \multicolumn{5}{l}{(c) Frozen prospective test: $R^2_{\rm oos}$ (trained on the 180 design inclusion cells)}\\\midrule")
+out.append(r" & $E1+J_{1.5\ell}$ & $E1+R_H$ & $E1+J_\psi$ & $E1$\\")
+for st, nm in (("C1", "C1 (30 cells)"), ("C2", "C2 (12 cells)")):
+    v = TF[st]
+    out.append(f"{nm} & {v['E1+J_1.5']:.2f} & {v['E1+R_H']:.2f} & {v['E1+J_psi']:.2f} & {v['E1']:.2f}\\\\")
+b = TF["C1_boot_lower5"]
+out.append(r"\multicolumn{5}{l}{Decisions: H1 " + TF["H1"] + r"; H2 " + TF["H2"] + f" (5\\% bootstrap bounds {b['vs_E1+R_H']:.2f} and {b['vs_E1+J_psi']:.2f}); H3 " + TF["H3"] + r".}\\")
+out.append(r"\multicolumn{5}{l}{Exploratory: RMSE " + f"{TX['C1']['rmse']:.3f} (C1), {TX['C2']['rmse']:.3f} (C2); mean residual {TX['C1']['mean_resid']:+.3f} (C1), {TX['C2']['mean_resid']:+.3f} (C2); std of $R_\\sigma$ {TX['C1']['std_y']:.3f}, {TX['C2']['std_y']:.3f}." + r"}\\")
+out.append(r"\bottomrule\end{tabular}}")
+out.append(r"\caption{Critical-distance onset intensity: (a) conditional test accounting for the radius sweep; (b) resolution sensitivity at the same physical radius; (c) prospective test under the frozen protocol of Section~S2.}\label{tab:S-tcdr4}\end{table}")
 open("../supp_v09_tables.tex", "w", encoding="utf-8").write("\n".join(out) + "\n")
 print("ok", len(out))

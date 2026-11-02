@@ -55,6 +55,7 @@ ANALYSE = [
     ("v0.9: conditional test with the radius sweep repeated in each resample", ["v09_r4_sweep_test.py"]),
     ("v0.9: resolution sensitivity of J_r (20 cells at N=255)", ["v09_r4_res255.py"]),
     ("v0.9: frozen J_1.5ell test, decision rules H1-H3", ["tcd_frozen/tcd_frozen.py", "analyze"]),
+    ("v0.9: frozen J_1.5ell test, exploratory diagnostics (not decision rules)", ["tcd_frozen/tcd_exploratory.py"]),
     ("v0.9: figures", ["v09_figures.py"]),
     ("v0.9: supplementary tables", ["v09_supp_tables.py"]),
 ]

@@ -1,7 +1,8 @@
 r"""Final conditional tests for Draft v0.9 (n>1 scope only, homogeneous population).
 
-Sampler: Freedman--Lane residual permutation with a quadratic ridge fit of eta on Psi_k,
-residuals permuted within morphology family (disks / ellipses) to respect heteroscedasticity.
+Sampler (sensitivity analysis only; it failed the realistic size check): eta resampled as quadratic ridge
+fit of eta on Psi_k plus permuted residuals, residuals permuted within morphology family (disks / ellipses).
+Inference uses the local-swap sampler (v09_r3_power.py, run_test(..., "swap", ...)).
 Statistics on the n_q closest pairs of the enlarged descriptor: max (= Omega(q)) and mean.
 Metrics: standardized Euclidean and Mahalanobis (whitened, pseudo-inverse).
 Primary family (Holm): P1 gaps->hazard, P2 covariance->hazard, P3 gaps->strength,
