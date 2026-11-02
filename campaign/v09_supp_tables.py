@@ -37,9 +37,9 @@ out.append(r"\bottomrule\end{tabular}}")
 out.append(r"\caption{Conditional permutation tests on the 150 multi-inclusion cells at $q=1\%$ (2000 resamples). "
            r"P1--P5: primary family (Holm adjustment of the worst-case statistic shown); X, M: exploratory. "
            r"Resampling sampler: the added block is resampled from a fitted quadratic conditional model (residuals permuted "
-           r"within morphology family); it is anti-conservative in the realistic synthetic null of Table~\\ref{tab:S-power} and is shown "
+           r"within morphology family); it is anti-conservative in the realistic synthetic null of Table~\ref{tab:S-power} and is shown "
            r"only as a sensitivity analysis. Local swap: exchange between near neighbours, used for inference. "
-           r"``mean'': mean $|R_i-R_j|$ over the closest pairs. Under its own model the residual sampler rejects at the 5\% "
+           r"``mean'': mean $|R_i-R_j|$ over the closest pairs. Under its own model the resampling sampler rejects at the 5\% "
            r"level in " + f"{CM.rej05_max.min():.2f}--{CM.rej05_max.max():.2f}" + r" (worst case) and "
            + f"{CM.rej05_mean.min():.2f}--{CM.rej05_mean.max():.2f}" +
            r" (mean) of 60 model-generated nulls per primary test.}\label{tab:S-cond}\end{table}")
